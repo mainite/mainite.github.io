@@ -1,0 +1,264 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>C++调用蓝图的两种方法 | 董国政の一方净土</title>
+<meta name="description" content="唯有爱与梦想不可辜负">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://mainite.github.io/favicon.ico?v=1628647865974">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://mainite.github.io/styles/main.css">
+
+<link rel="apple-touch-icon" href="https://www.z4a.net/image/UDxDLK" />
+<link rel="apple-touch-icon" sizes="72x72" href="https://www.z4a.net/image/UDxawO" />
+<link rel="apple-touch-icon" sizes="114x114" href="https://www.z4a.net/image/UDx1mG" />
+
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115637133-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-115637133-2');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://mainite.github.io">
+        <img class="avatar" src="https://mainite.github.io/images/avatar.png?v=1628647865974" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://mainite.github.io">
+        <h1 class="site-title">董国政の一方净土</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="http://inite.cn" class="menu purple-link">
+            Home
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/archives" class="menu purple-link">
+            Blog
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/tags" class="menu purple-link">
+            Tag
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/post/zi-ji/" class="menu purple-link">
+            Self
+          </a>
+        
+      
+        
+          <a class="menu purple-link" href="https://blog.csdn.net/qq_36409711" class="menu" target="_blank">
+            CSDN
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">C++调用蓝图的两种方法</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2017-12-25</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://mainite.github.io/tag/08pwvHhOZ/">
+                    UE4
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <!-- more -->
+<pre><code>	我们都知道，蓝图的开发效率高，而C++的执行效率高，有时候一些功能C++开发难度及高，而使用蓝图就简单多了，因为蓝图有好多给我们开发者封装好的蓝图节点，我们直接使用就好了，比如官方的时间轴，如果我们用C++写就会相当麻烦，
+
+	这篇博客就记录作者在开发过程中使用C++的多播代理调用蓝图的时间轴，从而实现动态缓慢开门关门效果0
+</code></pre>
+<p>效果图：<br>
+<img src="http://tva1.sinaimg.cn/large/0060lm7Tly1g5nyfs4d2xg30eh0a9e81.gif" alt="这里写图片描述" loading="lazy"></p>
+<p>首先附上<a href="https://docs.unrealengine.com/latest/CHN/Programming/UnrealArchitecture/Delegates/Multicast/index.html">官方链接</a></p>
+<p>虽然官方有教程，但是寥寥几个字，相信大家还是会看的一脸懵，<br>
+那么就开始看这篇博客吧，</p>
+<p>首先声明一下这个门是Actor的，在Actor里我创建了一个OpenDoor的C++组件，并提前定义了开门关门函数，可以接收玩家输入，也可以用触发器，随便能判断开关门条件即可， 这里不做详细教程，我只写多播代理的使用方法，如果连映射输入都不会建议查看官方文档</p>
+<p>好教程开始，<br>
+1，首先打开OpenDoor()组件在UClass()的头上创建代理</p>
+<pre><code>DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTestRequst);
+</code></pre>
+<p>2，创建之后声明两个代理，分别是开门关门</p>
+<pre><code>	UPROPERTY(BlueprintAssignable)
+		FTestRequst OnOpenDoorRequest;
+
+	UPROPERTY(BlueprintAssignable)
+		FTestRequst OnCloseDoorRequest;
+</code></pre>
+<p>3，然后在开门关门的函数里使用代理播放广播</p>
+<pre><code>void UOpenDoor::OpenDoor()
+{
+	OnOpenDoorRequest.Broadcast();
+}
+
+void UOpenDoor::closeDoor()
+{
+	OnCloseDoorRequest.Broadcast();
+}
+</code></pre>
+<p>4，编译保存，确定无误<br>
+5，打开门Actor的蓝图选中OpenDoor组件，这个时候就可以为我们的广播定义功能了<br>
+<img src="http://tva1.sinaimg.cn/large/0060lm7Tly1g5nyfsj9quj30e507kjrx.jpg" alt="这里写图片描述" loading="lazy">，</p>
+<p>6，之后我们就可以在蓝图中使用时间轴控制我们的门了<br>
+<img src="http://tva1.sinaimg.cn/large/0060lm7Tly1g5nyft29usj30rk0bqwhf.jpg" alt="这里写图片描述" loading="lazy"></p>
+<p>7，最后编译保存执行就好了</p>
+<!-- more -->
+<p>下面介绍第二种方法</p>
+<p>1，首先我们创建一个C++类，我用的是Pawn、如果创建Pawn要在游戏中修改掉Pawn，这个很简单你，这里不做教程<br>
+<img src="http://tva1.sinaimg.cn/large/0060lm7Tly1g5nyfis3hvj304804hglm.jpg" alt="这里写图片描述" loading="lazy"><br>
+2，基于c++创建一个蓝图类，如果创建不了就修改C++代码，<code>UCLASS(Blurprintable)</code>	把class暴露给蓝图，然后就成继承一个蓝图的Pawn类了，<br>
+3，打来蓝图的Pawn类，我们创建一个函数，让它随便输出一下东西，<br>
+作为演示，我们就把这个函数的参数输出出来，<br>
+<img src="http://tva1.sinaimg.cn/large/0060lm7Tly1g5nyfj1341j30nj0af3z1.jpg" alt="这里写图片描述" loading="lazy"><br>
+4，这时候我们回到我们的VS中来，在BeginPlay()里写入如下代码</p>
+<pre><code>	#include &quot;OutputDevice.h&quot;
+	FString cmd = FString::Printf(TEXT(&quot;TestFun HelloWorld&quot;));
+	FOutputDeviceDebug device;
+	CallFunctionByNameWithArguments(*cmd, device, NULL, true);
+</code></pre>
+<p>编译保存<br>
+回到项目中播放<br>
+<img src="http://tva1.sinaimg.cn/large/0060lm7Tly1g5nyfj7wzoj309p058wfk.jpg" alt="这里写图片描述" loading="lazy"></p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://mainite.github.io/post/ju-yu-wang-zhong-controller-chong-yao-lan-tu-jie-dian/">
+              <h3 class="post-title">
+                下一篇：局域网中Controller重要蓝图节点
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+        
+          <div id="gitalk-container"></div>
+        
+
+        
+      
+
+      <div class="site-footer">
+  <div class="slogan">唯有爱与梦想不可辜负</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  2019 Copyright © 董国政 · UE4 · Dev  | <a class="rss" href="https://mainite.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'ba286055364f64368aa2',
+        clientSecret: 'd875d40f43256d71c8ec74f0f71ccba9f3a4efad',
+        repo: 'zgChihiro.github.io',
+        owner: 'zgChihiro',
+        admin: ['zgChihiro'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

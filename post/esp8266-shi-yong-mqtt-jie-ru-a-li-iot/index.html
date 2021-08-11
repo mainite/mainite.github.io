@@ -1,0 +1,358 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>ESP8266使用MQTT接入阿里IoT | 董国政の一方净土</title>
+<meta name="description" content="唯有爱与梦想不可辜负">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://mainite.github.io/favicon.ico?v=1628647865974">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://mainite.github.io/styles/main.css">
+
+<link rel="apple-touch-icon" href="https://www.z4a.net/image/UDxDLK" />
+<link rel="apple-touch-icon" sizes="72x72" href="https://www.z4a.net/image/UDxawO" />
+<link rel="apple-touch-icon" sizes="114x114" href="https://www.z4a.net/image/UDx1mG" />
+
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115637133-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-115637133-2');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://mainite.github.io">
+        <img class="avatar" src="https://mainite.github.io/images/avatar.png?v=1628647865974" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://mainite.github.io">
+        <h1 class="site-title">董国政の一方净土</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="http://inite.cn" class="menu purple-link">
+            Home
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/archives" class="menu purple-link">
+            Blog
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/tags" class="menu purple-link">
+            Tag
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/post/zi-ji/" class="menu purple-link">
+            Self
+          </a>
+        
+      
+        
+          <a class="menu purple-link" href="https://blog.csdn.net/qq_36409711" class="menu" target="_blank">
+            CSDN
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">ESP8266使用MQTT接入阿里IoT</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2019-03-20</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://mainite.github.io/tag/Hht5eQqS5/">
+                    Esp8266
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <p>成果展示图：<br>
+<img src="https://www.z4a.net/images/2019/08/06/20190411162328956.gif" alt="20190411162328956.gif" loading="lazy"></p>
+<p>登陆https://nodemcu-build.com/index.php<br>
+选择以下19个模块生成bin文件</p>
+<pre><code>adc crypto dht encoder file gpio i2c mqtt net node pwm sjson sntp spi tmr u8g2 uart websocket wifi
+</code></pre>
+<p>使用工具刷入ESP8266<br>
+<img src="https://www.z4a.net/images/2019/08/06/20190411161035603.png" alt="20190411161035603.png" loading="lazy"><br>
+使用ESPlorer编写程序</p>
+<pre><code>-----[定义引脚，]-------------
+pin=4	
+gpio.mode(pin,gpio.OUTPUT)
+gpio.write(pin,gpio.HIGH)
+
+
+-----[wifi config]-------------
+---------------------------
+cfg={}  
+cfg.ssid=&quot;Chihiro&quot;
+cfg.pwd=&quot;88888888&quot;
+
+-----[阿里三元组]-------------
+----------------------------
+ProductKey =&quot;aaaaaaaaa&quot;   
+ClientId =wifi.sta.getmac()  
+DeviceName =&quot;sp01&quot;  
+DeviceSecret=&quot;bbbbbbbbbbbbbbbbb&quot;
+RegionId=&quot;cn-shanghai&quot;     
+
+myMQTTport=1883    --port
+myMQTT=nil        --client
+
+
+myMQTThost=ProductKey..&quot;.iot-as-mqtt.&quot;..RegionId..&quot;.aliyuncs.com&quot;   --host
+myMQTTusername=DeviceName..&quot;&amp;&quot;..ProductKey          --username
+
+topic0=&quot;/a1REbk4YN1c/${deviceName}/user/get&quot;  
+topic1=&quot;/a1REbk4YN1c/${deviceName}/user/my&quot; 
+topic2=&quot;/sys/a1REbk4YN1c/sp01/thing/event/property/post&quot;
+
+----[wifi connect]---------------
+wifi.setmode(wifi.STATION)  
+wifi.sta.config(cfg)       
+wifi.sta.connect()          
+
+
+wifi.eventmon.register(wifi.eventmon.STA_GOT_IP, function(T)
+     print(&quot;Connected, IP is &quot;..wifi.sta.getip())
+end)
+
+wifi.eventmon.register(wifi.eventmon.STA_DISCONNECTED, function(T)
+     print(&quot;wifi disconnect&quot;)
+end)
+
+
+
+function GetNetTime()
+    sntp.sync({&quot;0.nodemcu.pool.ntp.org&quot;,&quot;1.nodemcu.pool.ntp.org&quot;,&quot;2.nodemcu.pool.ntp.org&quot;,&quot;3.nodemcu.pool.ntp.org&quot;,&quot;www.beijing-time.org&quot;},
+         function(sec, usec, server, info)
+                 print('sync', sec, usec, server)       
+         end,
+         function()
+            print(&quot;get time error&quot;)
+         end)  
+    return 0
+end
+
+--------MQTT------------------
+myMQTTtimes='6666'
+hmacdata=&quot;clientId&quot;..ClientId..&quot;deviceName&quot;..DeviceName..&quot;productKey&quot;..ProductKey..&quot;timestamp&quot;..myMQTTtimes  
+myMQTTpassword=crypto.toHex(crypto.hmac(&quot;sha1&quot;,hmacdata,DeviceSecret))    
+myMQTTClientId=ClientId..&quot;|securemode=3,signmethod=hmacsha1,timestamp=&quot;..myMQTTtimes..&quot;|&quot;  
+
+
+-----[创建MQTT客户端]-------------
+myMQTT=mqtt.Client(myMQTTClientId, 120,myMQTTusername,myMQTTpassword) 
+
+   
+-----[客户端发起请求连接]-------------
+MQTTconnectFlag=0
+tmr.alarm(0,1000,1,function()
+    if myMQTT~=nil then
+        print(&quot;Attempting client connect...&quot;)
+        myMQTT:connect(myMQTThost, myMQTTport,0,MQTTSuccess,MQTTFailed)
+    end
+end)
+
+-----[MQTT连接成功]-------------
+function MQTTSuccess(client)
+    print(&quot;MQTT connected&quot;)
+    client:subscribe(topic0,0, function(conn)    
+        print(&quot;subscribe success&quot;) 
+    end) 
+    myMQTT=client
+    MQTTconnectFlag=1
+    tmr.stop(0)    
+end
+
+-----[MQTT连接失败]-------------
+function MQTTFailed(client,reson)
+    print(&quot;Fail reson:&quot;..reson)
+    MQTTconnectFlag=0
+    tmr.start(0)    
+end
+
+------[设备offline 事件]-----
+myMQTT:on(&quot;offline&quot;, function(client) 
+    print (&quot;offline&quot;) 
+    tmr.start(0)
+end)
+
+-----[开灯]-------------
+function OpenLed()
+    gpio.write(pin,0)
+end
+
+-----[关灯]-------------
+function CloseLed()
+    gpio.write(pin,1)
+end
+
+
+myMQTT:on(&quot;message&quot;, function(client, topic, data) 
+    print(topic ..&quot;:&quot;) 
+   if data ~= nil then
+        print(data)
+        if string.find(data, [[&quot;LightSwitch&quot;:0]])~=nil then
+            print(&quot;CloseLED&quot;)
+            CloseLed()
+        elseif string.find(data, [[&quot;LightSwitch&quot;:1]])~=nil then
+            print(&quot;OpenLed&quot;)  
+            OpenLed()       
+        elseif data==&quot;fs&quot;  then
+            myMQTT:publish(topic2,&quot;{\&quot;id\&quot;: \&quot;123\&quot;,\&quot;version\&quot;: \&quot;1.0\&quot;,\&quot;params\&quot;: { \&quot;CurrentTemperature\&quot;: {\&quot;value\&quot;: 23.3},\&quot;CurrentHumidity\&quot;: { \&quot;value\&quot;: 31.6, }},\&quot;method\&quot;: \&quot;thing.event.property.post\&quot;}&quot;,0,0,function(client) print(&quot;send ok&quot; ) end )     
+        else
+            gpio.write(pin,1) 
+        end    
+    end     
+end)
+
+--------[定时上传]------------
+--tmr.alarm(1, 5000, 1, function()  
+   -- if MQTTconnectFlag==1 and myMQTT~=nil then   
+       -- myMQTT:publish(topic0,&quot;this is data upload&quot;,0,0,function(client)
+                       -- print(&quot;send ok&quot; ) 
+        --end)
+   --end
+--end)
+
+</code></pre>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://mainite.github.io/post/esp8266-an-zhuang-wifi-sha-shou-han-gu-jian/">
+              <h3 class="post-title">
+                下一篇：ESP8266安装Wifi杀手（含固件）
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+        
+          <div id="gitalk-container"></div>
+        
+
+        
+      
+
+      <div class="site-footer">
+  <div class="slogan">唯有爱与梦想不可辜负</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  2019 Copyright © 董国政 · UE4 · Dev  | <a class="rss" href="https://mainite.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'ba286055364f64368aa2',
+        clientSecret: 'd875d40f43256d71c8ec74f0f71ccba9f3a4efad',
+        repo: 'zgChihiro.github.io',
+        owner: 'zgChihiro',
+        admin: ['zgChihiro'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

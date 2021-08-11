@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title> C++ dll、lib 的定义以及引用， | 董国政の一方净土</title>
+<meta name="description" content="唯有爱与梦想不可辜负">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://mainite.github.io/favicon.ico?v=1628647865974">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://mainite.github.io/styles/main.css">
+
+<link rel="apple-touch-icon" href="https://www.z4a.net/image/UDxDLK" />
+<link rel="apple-touch-icon" sizes="72x72" href="https://www.z4a.net/image/UDxawO" />
+<link rel="apple-touch-icon" sizes="114x114" href="https://www.z4a.net/image/UDx1mG" />
+
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115637133-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-115637133-2');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://mainite.github.io">
+        <img class="avatar" src="https://mainite.github.io/images/avatar.png?v=1628647865974" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://mainite.github.io">
+        <h1 class="site-title">董国政の一方净土</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="http://inite.cn" class="menu purple-link">
+            Home
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/archives" class="menu purple-link">
+            Blog
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/tags" class="menu purple-link">
+            Tag
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/post/zi-ji/" class="menu purple-link">
+            Self
+          </a>
+        
+      
+        
+          <a class="menu purple-link" href="https://blog.csdn.net/qq_36409711" class="menu" target="_blank">
+            CSDN
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title"> C++ dll、lib 的定义以及引用，</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2017-12-28</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://mainite.github.io/tag/XsHBgzEiW/">
+                    C++
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <p>最近在研究socket，发现socket程序要依赖ws2_32.dll,涉及到动态链接库，有点懵，上网恶补了一下链接库的知识，最后总结出这么一篇文章</p>
+<p>链接库分为两种：动态链接库(dll) 和静态链接库(lib)<br>
+动态链接库 ： 动态链接库可以动态的被引用和卸载，可以多个模块调用一块库。<br>
+静态链接库：lib 中的指令都全部被直接包含在最终生成的 EXE 文件中了，所以它的执行效率会比动态链接库高</p>
+<p>动态链接库dll和静态链接库lib在使用的时候也是有区别的：<br>
+动态链接库dll：.h、dll、lib<br>
+静态链接库lib：.h、lib文件</p>
+<p>教程开始：<br>
+IDE:Visual Studio  2017</p>
+<p>1、首先我们创建一个Windows控制台应用程序随便起个名字比如“MyLib”<br>
+<a href="https://www.z4a.net/image/U9LgSk"><img src="https://www.z4a.net/images/2019/08/05/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTcxMjI4MTY1MTAxNjE4.png" alt="aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTcxMjI4MTY1MTAxNjE4.png" loading="lazy"></a></p>
+<p>2、然后我们创建一个MyLib的头文件和源文件MyLib.h和MyLib.cpp</p>
+<pre><code>// MyLib.h  
+#ifndef _LIB_TEST_H  
+#define _LIB_TEST_H    
+#include &lt;iostream&gt;    
+class MyLib
+{  
+public:  
+    void display();  
+};   
+#endif // !_LIB_TEST_H 
+</code></pre>
+<pre><code>//MyLib.cpp
+#include &quot;stdafx.h&quot;
+#include &quot;MyLib.h&quot; 
+
+void MyLib::display()
+{
+	for (float y = 1.5f; y &gt; -1.5f; y -= 0.1f) {
+		for (float x = -1.5f; x &lt; 1.5f; x += 0.05f) {
+			float a = x * x + y * y - 1;
+			putchar(a * a * a - x * x * y * y * y &lt;= 0.0f ? '*' : ' ');
+		}
+		putchar('\n');
+	}
+}
+</code></pre>
+<p>3、代码写完之后我们会发现编译之后会标错<br>
+<a href="https://www.z4a.net/image/U9LTnL"><img src="https://www.z4a.net/images/2019/08/05/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTcxMjI4MTcwNjM3MjM5.png" alt="aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTcxMjI4MTcwNjM3MjM5.png" loading="lazy"></a></p>
+<p>这是因为我们没有修改项目的配置类型，<br>
+在解决方案右击项目-&gt;属性 -&gt;配置属性 -&gt; 常规 -&gt; 配置类型 修改成静态库lib<br>
+<a href="https://www.z4a.net/image/U9LjA9"><img src="https://www.z4a.net/images/2019/08/05/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTcxMjI4MTcxOTAzNzY3.png" alt="aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTcxMjI4MTcxOTAzNzY3.png" loading="lazy"></a></p>
+<p>F7生成，这时候我们就可以到项目的目录中去找我们的MyLib.lib和MyLib.h文件</p>
+<p>4、然后我们在创建一个项目“uselib”使用我们的lib文件</p>
+<pre><code>//useliib.cpp
+#include &quot;stdafx.h&quot;
+#include &lt;iostream&gt;  
+#include &quot;libtest.h&quot;  //头文件
+#pragma comment(lib, &quot;mylib.lib&quot;) //引用链接库
+int main()
+{
+	libtest test;
+	test.display();
+	return 0;
+}
+</code></pre>
+<p>5、运行会发现链接失败，最后一步，配置链接库目录，补齐项目包含目录</p>
+<figure data-type="image" tabindex="1"><a href="https://www.z4a.net/image/U9L2Yb"><img src="https://www.z4a.net/images/2019/08/05/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTcxMjI4MTcyNjI3NjQ1.png" alt="aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTcxMjI4MTcyNjI3NjQ1.png" loading="lazy"></a></figure>
+<p>6.执行程序<br>
+<a href="https://www.z4a.net/image/U9LeeN"><img src="https://www.z4a.net/images/2019/08/05/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTcxMjI4MTcyNzM3OTM1.png" alt="aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTcxMjI4MTcyNzM3OTM1.png" loading="lazy"></a></p>
+<p>作者才疏学浅，如有不足，还望不吝赐教</p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://mainite.github.io/post/ue4-xiang-mu-can-jia-ban-ben-guan-li-xu-yao-hu-lue-de-wen-jian/">
+              <h3 class="post-title">
+                下一篇：UE4项目参加版本管理需要忽略的文件
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+        
+          <div id="gitalk-container"></div>
+        
+
+        
+      
+
+      <div class="site-footer">
+  <div class="slogan">唯有爱与梦想不可辜负</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  2019 Copyright © 董国政 · UE4 · Dev  | <a class="rss" href="https://mainite.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'ba286055364f64368aa2',
+        clientSecret: 'd875d40f43256d71c8ec74f0f71ccba9f3a4efad',
+        repo: 'zgChihiro.github.io',
+        owner: 'zgChihiro',
+        admin: ['zgChihiro'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

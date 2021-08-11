@@ -1,0 +1,273 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>UE4 Plugins插件开发 | 董国政の一方净土</title>
+<meta name="description" content="唯有爱与梦想不可辜负">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://mainite.github.io/favicon.ico?v=1628647865974">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://mainite.github.io/styles/main.css">
+
+<link rel="apple-touch-icon" href="https://www.z4a.net/image/UDxDLK" />
+<link rel="apple-touch-icon" sizes="72x72" href="https://www.z4a.net/image/UDxawO" />
+<link rel="apple-touch-icon" sizes="114x114" href="https://www.z4a.net/image/UDx1mG" />
+
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115637133-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-115637133-2');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://mainite.github.io">
+        <img class="avatar" src="https://mainite.github.io/images/avatar.png?v=1628647865974" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://mainite.github.io">
+        <h1 class="site-title">董国政の一方净土</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="http://inite.cn" class="menu purple-link">
+            Home
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/archives" class="menu purple-link">
+            Blog
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/tags" class="menu purple-link">
+            Tag
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/post/zi-ji/" class="menu purple-link">
+            Self
+          </a>
+        
+      
+        
+          <a class="menu purple-link" href="https://blog.csdn.net/qq_36409711" class="menu" target="_blank">
+            CSDN
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">UE4 Plugins插件开发</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2018-09-04</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://mainite.github.io/tag/08pwvHhOZ/">
+                    UE4
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <p>##UE4的开发者应该都知道，虚幻4的官方为我们提供了一套蓝图系统，使我们能够利用蓝图节点在不敲一行代码的情况下开发出自己想要的东西来</p>
+<p>##但是C++也并非没有用处了，有时候我们需要拓展引擎的时候，我们就可以把功能写进插件里，这样我们如果后期需要移植功能也很方便，</p>
+<p>##网上关于插件的教程过于复杂，不利于新手学习，在经过反复学习查了很多资料后，写下了这篇文章，本文章带领大家开发一个最简单的插件，输出一句话，通过最简单的案例使大家学会如何开发插件，然后大家可以举一反三去写自己的需要的插件</p>
+<p>##好了教程开始</p>
+<p>1 首先创建一个空的C++工程，没有初学者内容，名字随便起<br>
+<img src="https://www.z4a.net/images/2019/08/05/20180904095643976.png" alt="20180904095643976.png" loading="lazy"></p>
+<p>等项目编译好之后我们创建一个插件<br>
+<img src="https://www.z4a.net/images/2019/08/05/20180904095753482.png" alt="20180904095753482.png" loading="lazy"></p>
+<p>等编译好之后VS里的目录应该是这样的<br>
+<img src="https://www.z4a.net/images/2019/08/05/201809040958399.png" alt="201809040958399.png" loading="lazy"></p>
+<p>我们在创建一个C++类继承自 “Blueprint Function  Library”<br>
+<img src="https://www.z4a.net/images/2019/08/05/2018090410023271.png" alt="2018090410023271.png" loading="lazy"><br>
+<img src="https://www.z4a.net/images/2019/08/05/20180904100244760.png" alt="20180904100244760.png" loading="lazy"><br>
+<img src="https://www.z4a.net/images/2019/08/05/2018090410031318.png" alt="2018090410031318.png" loading="lazy"></p>
+<p>一般情况下你会发现项目居然报错了，这个时候不要惊慌，这是因为创建的模块需要热加载进入<br>
+操作方法如下<br>
+打开VS按F5即可，这里先不用着急</p>
+<p>我们先找到我们的 MyBlueprintFunctionLibrary 的头文件和源文件</p>
+<p>添加一个函数， 代码如下</p>
+<pre><code>
+//.h
+#pragma once
+
+#include &quot;CoreMinimal.h&quot;
+#include &quot;Kismet/BlueprintFunctionLibrary.h&quot;
+#include &quot;MyBlueprintFunctionLibrary.generated.h&quot;
+
+/**
+ * 
+ */
+UCLASS()
+class MYPLUGIN_API UMyBlueprintFunctionLibrary : public UBlueprintFunctionLibrary
+{
+	GENERATED_BODY()
+	
+public:
+	UFUNCTION(BlueprintCallable, Category = &quot;PluginTest&quot;)
+		static void PluginFunction();
+
+	
+	
+};
+
+</code></pre>
+<pre><code>//.cpp
+#include &quot;MyBlueprintFunctionLibrary.h&quot;
+#include &quot;Engine.h&quot;
+
+
+
+void UMyBlueprintFunctionLibrary::PluginFunction()
+{
+	GEngine-&gt;AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT(&quot;PluginFunciton_OK&quot;));
+}
+
+</code></pre>
+<p><img src="https://www.z4a.net/images/2019/08/05/20180904100706416.png" alt="20180904100706416.png" loading="lazy"><br>
+<img src="https://www.z4a.net/images/2019/08/05/20180904100713504.png" alt="20180904100713504.png" loading="lazy"></p>
+<p>代码写完之后我们直接F5热加载一边 就好了</p>
+<p>然后我们打开项目的关卡蓝图</p>
+<p>搜索 PluginTest ，然后选择 PluginFunction</p>
+<figure data-type="image" tabindex="1"><img src="https://www.z4a.net/images/2019/08/05/20180904100840793.png" alt="20180904100840793.png" loading="lazy"></figure>
+<p>运行程序</p>
+<figure data-type="image" tabindex="2"><img src="https://www.z4a.net/images/2019/08/05/20180904100911423.png" alt="20180904100911423.png" loading="lazy"></figure>
+<p>希望这篇文章对你有帮助，后期我会继续在我的博客把知识点整理的浅显易懂</p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://mainite.github.io/post/ue4-yin-yong-di-san-fang-ku-lib-yi-ji-dll/">
+              <h3 class="post-title">
+                下一篇：UE4引用第三方库Lib以及dll
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+        
+          <div id="gitalk-container"></div>
+        
+
+        
+      
+
+      <div class="site-footer">
+  <div class="slogan">唯有爱与梦想不可辜负</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  2019 Copyright © 董国政 · UE4 · Dev  | <a class="rss" href="https://mainite.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'ba286055364f64368aa2',
+        clientSecret: 'd875d40f43256d71c8ec74f0f71ccba9f3a4efad',
+        repo: 'zgChihiro.github.io',
+        owner: 'zgChihiro',
+        admin: ['zgChihiro'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,238 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>UE4手机短信验证码 | 董国政の一方净土</title>
+<meta name="description" content="唯有爱与梦想不可辜负">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://mainite.github.io/favicon.ico?v=1628647865974">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://mainite.github.io/styles/main.css">
+
+<link rel="apple-touch-icon" href="https://www.z4a.net/image/UDxDLK" />
+<link rel="apple-touch-icon" sizes="72x72" href="https://www.z4a.net/image/UDxawO" />
+<link rel="apple-touch-icon" sizes="114x114" href="https://www.z4a.net/image/UDx1mG" />
+
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115637133-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-115637133-2');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://mainite.github.io">
+        <img class="avatar" src="https://mainite.github.io/images/avatar.png?v=1628647865974" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://mainite.github.io">
+        <h1 class="site-title">董国政の一方净土</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="http://inite.cn" class="menu purple-link">
+            Home
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/archives" class="menu purple-link">
+            Blog
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/tags" class="menu purple-link">
+            Tag
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/post/zi-ji/" class="menu purple-link">
+            Self
+          </a>
+        
+      
+        
+          <a class="menu purple-link" href="https://blog.csdn.net/qq_36409711" class="menu" target="_blank">
+            CSDN
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">UE4手机短信验证码</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2020-06-20</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://mainite.github.io/tag/08pwvHhOZ/">
+                    UE4
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <p>插件名：<br>
+<a href="https://www.unrealengine.com/marketplace/zh-CN/product/phoneauthcode">PhoneAuthCode</a><br>
+插件简介：<br>
+本插件使用阿里云发送短信验证码，<br>
+对用户进行身份验证<br>
+考虑到安全问题，本插件采用服务器生成验证码的方式，<br>
+可运行在win和linux系统中<br>
+<img src="https://www.z4a.net/images/2020/06/20/Snipaste_2020-06-20_22-00-20.png" alt="Snipaste_2020-06-20_22-00-20.png" loading="lazy"><br>
+仅需三步完成客户端发送手机验证码：<br>
+1.导入插件<br>
+2.配置Config文件<br>
+3.调用蓝图编写业务逻辑</p>
+<p>先看效果图：<br>
+<img src="https://www.z4a.net/images/2020/06/21/2.gif" alt="2.gif" loading="lazy"><br>
+下载好插件并导入到项目根目录<br>
+<img src="https://www.z4a.net/images/2020/07/07/aaa.png" alt="aaa.png" loading="lazy"></p>
+<p>登录<br>
+<a href="https://dysms.console.aliyun.com/">https://dysms.console.aliyun.com/</a><br>
+审核获取 AccessKeyId 、AccessSecret 、SignName 、TemplateCode<br>
+<img src="https://www.z4a.net/images/2020/06/20/Snipaste_2020-06-20_22-42-25.png" alt="Snipaste_2020-06-20_22-42-25.png" loading="lazy"></p>
+<p>打开项目填写蓝图代码，<br>
+配置Config，然后使用 SendActivationCode 发送短信验证<br>
+<img src="https://www.z4a.net/images/2020/07/07/22.png" alt="22.png" loading="lazy"></p>
+<p>其中IP应填服务器的公网iP<br>
+如果不填则默认使用临时服务器，建议大家配置自己的服务器</p>
+<p>服务器开源：<br>
+<a href="https://github.com/mainite/UE4_SendSMS_Server/">https://github.com/mainite/UE4_SendSMS_Server/</a></p>
+<p>如果请求成功返回的Message就是手机验证码<br>
+如果失败返回的Message就是错误信息</p>
+<p><a href="https://www.bilibili.com/video/BV1LA411e7U6">bilibili</a></p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://mainite.github.io/post/li-yong-qq-ni-cheng-zuo-wei-ruan-jian-ban-ben-hao/">
+              <h3 class="post-title">
+                下一篇：利用QQ昵称作为软件版本号
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+        
+          <div id="gitalk-container"></div>
+        
+
+        
+      
+
+      <div class="site-footer">
+  <div class="slogan">唯有爱与梦想不可辜负</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  2019 Copyright © 董国政 · UE4 · Dev  | <a class="rss" href="https://mainite.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'ba286055364f64368aa2',
+        clientSecret: 'd875d40f43256d71c8ec74f0f71ccba9f3a4efad',
+        repo: 'zgChihiro.github.io',
+        owner: 'zgChihiro',
+        admin: ['zgChihiro'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,311 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>UE4对本地文件的操作 | 董国政の一方净土</title>
+<meta name="description" content="唯有爱与梦想不可辜负">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://mainite.github.io/favicon.ico?v=1628647865974">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://mainite.github.io/styles/main.css">
+
+<link rel="apple-touch-icon" href="https://www.z4a.net/image/UDxDLK" />
+<link rel="apple-touch-icon" sizes="72x72" href="https://www.z4a.net/image/UDxawO" />
+<link rel="apple-touch-icon" sizes="114x114" href="https://www.z4a.net/image/UDx1mG" />
+
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115637133-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-115637133-2');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://mainite.github.io">
+        <img class="avatar" src="https://mainite.github.io/images/avatar.png?v=1628647865974" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://mainite.github.io">
+        <h1 class="site-title">董国政の一方净土</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="http://inite.cn" class="menu purple-link">
+            Home
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/archives" class="menu purple-link">
+            Blog
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/tags" class="menu purple-link">
+            Tag
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/post/zi-ji/" class="menu purple-link">
+            Self
+          </a>
+        
+      
+        
+          <a class="menu purple-link" href="https://blog.csdn.net/qq_36409711" class="menu" target="_blank">
+            CSDN
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">UE4对本地文件的操作</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2018-07-27</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://mainite.github.io/tag/08pwvHhOZ/">
+                    UE4
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <h1 id="ue4对本地文件的操作">UE4对本地文件的操作</h1>
+<figure data-type="image" tabindex="1"><img src="https://www.z4a.net/images/2019/08/05/20180727145026885.jpg" alt="20180727145026885.jpg" loading="lazy"></figure>
+<h2 id="首先是文件的读写">首先是文件的读写</h2>
+<p>.h</p>
+<pre><code>	UFUNCTION(BlueprintCallable, Category = &quot;File operation&quot;)
+		static FString ReadStringToFile(FString Dir);
+
+	UFUNCTION(BlueprintCallable, Category = &quot;File operation&quot;)
+		static void WriteStringToFile(FString FileName, FString content);
+</code></pre>
+<p>.cpp</p>
+<pre><code>FString ACPP_Test::ReadStringToFile(FString Dir)
+{
+	FString Result;
+	FFileHelper::LoadFileToString(Result, *Dir);
+	return Result;
+}
+
+void ACPP_Test::WriteStringToFile(FString FileName, FString content)
+{
+	FFileHelper::SaveStringToFile(content, *FileName);
+}
+</code></pre>
+<h2 id="查找文件或者文件夹">查找文件或者文件夹</h2>
+<pre><code>#include &quot;Runtime/Core/Public/HAL/FileManagerGeneric.h&quot;
+</code></pre>
+<p>.h</p>
+<pre><code>	UFUNCTION(BlueprintCallable, Category = &quot;File operation&quot;)
+		static TArray&lt;FString&gt; FindFiles(FString Path, FString Filter, bool Files, bool Directory);
+
+</code></pre>
+<p>.cpp</p>
+<pre><code>TArray&lt;FString&gt; ACPP_Test::FindFiles(FString Path, FString Filter, bool Files, bool Directory)
+{
+	TArray&lt;FString&gt; FilePathList;
+	FilePathList.Empty();    
+	FFileManagerGeneric::Get().FindFilesRecursive(FilePathList, *Path, *Filter, Files, Directory);
+	return FilePathList;
+}
+</code></pre>
+<h2 id="指定文件移动到某处修改文件路径">指定文件移动到某处(修改文件路径)</h2>
+<pre><code>#include &quot;Runtime/Core/Public/HAL/FileManagerGeneric.h&quot;
+</code></pre>
+<p>.h</p>
+<pre><code>	UFUNCTION(BlueprintCallable, Category = &quot;File operation&quot;)
+		static bool MoveFileTo(FString To, FString From);
+</code></pre>
+<p>.cpp</p>
+<pre><code>bool ACPP_Test::MoveFileTo(FString To, FString From)
+{
+	return IFileManager::Get().Move(*To, *From);
+}
+</code></pre>
+<h2 id="删除指定文件">删除指定文件</h2>
+<pre><code>#include &quot;Runtime/Core/Public/HAL/FileManagerGeneric.h&quot;
+</code></pre>
+<p>.h</p>
+<pre><code>UFUNCTION(BlueprintCallable, Category = &quot;File operation&quot;)
+		static bool DeleteFile(FString FilePath);
+</code></pre>
+<p>.cpp</p>
+<pre><code>bool ACPP_Test::DeleteFile(FString FilePath)
+{
+	return IFileManager::Get().Delete(*FilePath);
+}
+</code></pre>
+<h2 id="打开指定文件">打开指定文件</h2>
+<pre><code>#include &quot;Runtime/Core/Public/HAL/FileManagerGeneric.h&quot;
+</code></pre>
+<p>.h</p>
+<pre><code>	UFUNCTION(BlueprintCallable, Category = &quot;File operation&quot;)
+		static void   OpenFile(FString FilePath);
+</code></pre>
+<p>.cpp</p>
+<pre><code>void ACPP_Test::OpenFile(FString FilePath)
+{
+	FPlatformProcess::CreateProc(*FilePath, nullptr, true, false, false, nullptr, 0, nullptr, nullptr);
+}
+</code></pre>
+<h2 id="创建文件夹">创建文件夹</h2>
+<p>.h</p>
+<pre><code>	UFUNCTION(BlueprintCallable, Category = &quot;File operation&quot;)
+		static void CreateDic(FString filePath);
+</code></pre>
+<p>.cpp</p>
+<pre><code>void ACPP_Test::CreateDic(FString filePath)
+{
+	IPlatformFile&amp; PlatformFile = FPlatformFileManager::Get().GetPlatformFile();
+	PlatformFile.CreateDirectory(*filePath);
+}
+</code></pre>
+<h2 id="删除文件夹">删除文件夹</h2>
+<p>.h</p>
+<pre><code>UFUNCTION(BlueprintCallable, Category = &quot;File operation&quot;)
+		static void DeleteDic(FString filePath);
+</code></pre>
+<p>.cpp</p>
+<pre><code>void ACPP_Test::DeleteDic(FString filePath)
+{
+	IPlatformFile&amp; PlatformFile = FPlatformFileManager::Get().GetPlatformFile();
+	PlatformFile.DeleteDirectory(*filePath);
+}
+</code></pre>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://mainite.github.io/post/ue4-da-bao-ios-cai-keng-ji-lu/">
+              <h3 class="post-title">
+                下一篇：UE4打包IOS踩坑记录
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+        
+          <div id="gitalk-container"></div>
+        
+
+        
+      
+
+      <div class="site-footer">
+  <div class="slogan">唯有爱与梦想不可辜负</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  2019 Copyright © 董国政 · UE4 · Dev  | <a class="rss" href="https://mainite.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'ba286055364f64368aa2',
+        clientSecret: 'd875d40f43256d71c8ec74f0f71ccba9f3a4efad',
+        repo: 'zgChihiro.github.io',
+        owner: 'zgChihiro',
+        admin: ['zgChihiro'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

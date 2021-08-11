@@ -1,0 +1,273 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>检测VC库是否存在 | 董国政の一方净土</title>
+<meta name="description" content="唯有爱与梦想不可辜负">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://mainite.github.io/favicon.ico?v=1628647865974">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://mainite.github.io/styles/main.css">
+
+<link rel="apple-touch-icon" href="https://www.z4a.net/image/UDxDLK" />
+<link rel="apple-touch-icon" sizes="72x72" href="https://www.z4a.net/image/UDxawO" />
+<link rel="apple-touch-icon" sizes="114x114" href="https://www.z4a.net/image/UDx1mG" />
+
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115637133-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-115637133-2');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://mainite.github.io">
+        <img class="avatar" src="https://mainite.github.io/images/avatar.png?v=1628647865974" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://mainite.github.io">
+        <h1 class="site-title">董国政の一方净土</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="http://inite.cn" class="menu purple-link">
+            Home
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/archives" class="menu purple-link">
+            Blog
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/tags" class="menu purple-link">
+            Tag
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/post/zi-ji/" class="menu purple-link">
+            Self
+          </a>
+        
+      
+        
+          <a class="menu purple-link" href="https://blog.csdn.net/qq_36409711" class="menu" target="_blank">
+            CSDN
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">检测VC库是否存在</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2019-07-04</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://mainite.github.io/tag/h6ltYpBfZ/">
+                    杂
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <p><em><strong>本篇文章整理自网络，所以没有标注原创，原创我也找不到</strong></em></p>
+<h2 id="通过msi的api来查询-参见msdn说明-msiqueryproductstate">通过MSI的API来查询 ，参见MSDN说明 MsiQueryProductState</h2>
+<h2 id="msiqueryproductstate的输入参数为产品id其返回值为产品安装状态若返回值为installstate_default则表示已安装">MsiQueryProductState的输入参数为产品ID，其返回值为产品安装状态，若返回值为INSTALLSTATE_DEFAULT则表示已安装。</h2>
+<h2 id="返回值及安装状态">返回值及安装状态：</h2>
+<blockquote>
+<p>INSTALLSTATE	返回值      	产品的安装状态 INSTALLSTATE_UNKNOWN	-1	该产品未被广告或安装<br>
+INSTALLSTATE_ADVERTISED        	1	该产品已广告但未安装<br>
+INSTALLSTATE_ABSENT	2	该产品为不同的用户安装<br>
+INSTALLSTATE_DEFAULT	5	该产品已为当前用户安装</p>
+</blockquote>
+<pre><code>#include &quot;stdafx.h&quot;
+#include &lt;Windows.h&gt; 
+#include &lt;stdio.h&gt;
+#include &lt;msi.h&gt;
+#pragma comment(lib,&quot;Msi.lib&quot;)
+
+int main()
+{
+	INSTALLSTATE install_state;
+	install_state = MsiQueryProductState(L&quot;{071c9b48-7c32-4621-a0ac-3f809523288f}&quot;);  //for x64 runtime
+	if (install_state == INSTALLSTATE_DEFAULT)
+	{
+		::MessageBox(NULL, L&quot;已经安装&quot;, L&quot;Success&quot;, MB_OK | MB_ICONINFORMATION);
+	}
+	else
+	{
+		::MessageBox(NULL, L&quot;请安装&quot;, L&quot;Error&quot;, MB_OK | MB_ICONERROR);
+	}
+	getchar();
+}
+</code></pre>
+<p>另外提供他们在注册表里的键值</p>
+<blockquote>
+<pre><code>Visual C++ 2005 runtime files
+Visual C++ 2005 Redistributable Package (x86) - {A49F249F-0C91-497F-86DF-B2585E8E76B7}
+Visual C++ 2005 Redistributable Package (x64) - {6E8E85E8-CE4B-4FF5-91F7-04999C9FAE6A}
+Visual C++ 2005 Redistributable Package (ia64) - {03ED71EA-F531-4927-AABD-1C31BCE8E187}
+ 
+Visual C++ 2005 SP1 runtime files
+ 
+Visual C++ 2005 SP1 Redistributable Package (x86) - {7299052B-02A4-4627-81F2-1818DA5D550D}
+Visual C++ 2005 SP1 Redistributable Package (x64) - {071C9B48-7C32-4621-A0AC-3F809523288F}
+Visual C++ 2005 SP1 Redistributable Package (ia64) - {0F8FB34E-675E-42ED-850B-29D98C2ECE08}
+ 
+Visual C++ 2005 SP1 ATL Security Update runtime files
+Visual C++ 2005 SP1 ATL Security Update Redistributable Package (x86) - {837B34E3-7C30-493C-8F6A-2B0F04E2912C}
+Visual C++ 2005 SP1 ATL Security Update Redistributable Package (x64) - {6CE5BAE9-D3CA-4B99-891A-1DC6C118A5FC}
+Visual C++ 2005 SP1 ATL Security Update Redistributable Package (ia64) - {85025851-A784-46D8-950D-05CB3CA43A13}
+ 
+Visual C++ 2008 runtime files
+* VC 9.0 (x86) - {FF66E9F6-83E7-3A3E-AF14-8DE9A809A6A4} 
+* VC 9.0 (x64) - {350AA351-21FA-3270-8B7A-835434E766AD}
+* VC 9.0 (ia64) - {2B547B43-DB50-3139-9EBE-37D419E0F5FA} 
+ 
+Visual C++ 2008 SP1 runtime files
+* VC 9.0 SP1 (x86) - {9A25302D-30C0-39D9-BD6F-21E6EC160475}
+* VC 9.0 SP1 (x64) - {8220EEFE-38CD-377E-8595-13398D740ACE}
+* VC 9.0 SP1 (ia64) - {5827ECE1-AEB0-328E-B813-6FC68622C1F9}
+ 
+Visual C++ 2008 SP1 ATL Security Update runtime files
+* VC 9.0 SP1 ATL (x86) - {1F1C2DFC-2D24-3E06-BCB8-725134ADF989}
+* VC 9.0 SP1 ATL (x64) - {4B6C7001-C7D6-3710-913E-5BC23FCE91E6}
+* VC 9.0 SP1 ATL (ia64) - {977AD349-C2A8-39DD-9273-285C08987C7B}
+</code></pre>
+</blockquote>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://mainite.github.io/post/ue4-zhi-da-kai-xu-ni-jian-pan/">
+              <h3 class="post-title">
+                下一篇：UE4之打开虚拟键盘
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+        
+          <div id="gitalk-container"></div>
+        
+
+        
+      
+
+      <div class="site-footer">
+  <div class="slogan">唯有爱与梦想不可辜负</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  2019 Copyright © 董国政 · UE4 · Dev  | <a class="rss" href="https://mainite.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'ba286055364f64368aa2',
+        clientSecret: 'd875d40f43256d71c8ec74f0f71ccba9f3a4efad',
+        repo: 'zgChihiro.github.io',
+        owner: 'zgChihiro',
+        admin: ['zgChihiro'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,261 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>git学习笔记 | 董国政の一方净土</title>
+<meta name="description" content="唯有爱与梦想不可辜负">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://mainite.github.io/favicon.ico?v=1628647865974">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://mainite.github.io/styles/main.css">
+
+<link rel="apple-touch-icon" href="https://www.z4a.net/image/UDxDLK" />
+<link rel="apple-touch-icon" sizes="72x72" href="https://www.z4a.net/image/UDxawO" />
+<link rel="apple-touch-icon" sizes="114x114" href="https://www.z4a.net/image/UDx1mG" />
+
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115637133-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-115637133-2');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://mainite.github.io">
+        <img class="avatar" src="https://mainite.github.io/images/avatar.png?v=1628647865974" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://mainite.github.io">
+        <h1 class="site-title">董国政の一方净土</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="http://inite.cn" class="menu purple-link">
+            Home
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/archives" class="menu purple-link">
+            Blog
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/tags" class="menu purple-link">
+            Tag
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/post/zi-ji/" class="menu purple-link">
+            Self
+          </a>
+        
+      
+        
+          <a class="menu purple-link" href="https://blog.csdn.net/qq_36409711" class="menu" target="_blank">
+            CSDN
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">git学习笔记</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2017-03-23</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://mainite.github.io/tag/zdP_4Bck5/">
+                    git
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <p>工作区 &gt;&gt; 暂存区 &gt;&gt; 分支<br>
+leangit &gt;&gt; stage(index) &gt;&gt;master</p>
+<p>配置git信息<br>
+**git config --global user.name<br>
+git config --global user.email **</p>
+<p>ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com&quot;电脑生成钥匙<br>
+cat ~/.ssh/id_rsa.pub 查看本地钥匙</p>
+<p>ssh复制到粘贴版<br>
+↓↓↓↓↓<br>
+<strong>clip &lt; ~/.ssh/id_rsa.pub</strong></p>
+<p>文件添加仓库的两步</p>
+<p>mkdir 创建文件夹</p>
+<p>git init 将目录编程git可以管理的仓库</p>
+<p>git add readme.txt<br>
+git commit -m &quot;提示 或者时间&quot;<br>
+git remote add origin git@github.com:q3689852/仓库名字.git本地库上传github</p>
+<p>pwd 显示当前目录</p>
+<p>git status 查看仓库状态（文件是否被修改）<br>
+git diff 查看文件修改的不同（别修改内容）工作区和暂存区的区别</p>
+<p>git log 查看之前的版本<br>
+git log --pretty=oneline 上者的简约版</p>
+<p>cat readme.txt 可以展示出此文件的内容</p>
+<p>git reset --hard HEAD^ 版本回滚^表示一个版本多个用~加数字<br>
+git reset --hard 3628164 加版本号的前几位可任意滚</p>
+<p>git checkout -- readme.txt 撤销修改工作区的文件<br>
+git reset HEAD -- readme.txt 暂存区的修改撤销掉，重新放回工作区</p>
+<p>git reflog 列出版本滚动记录</p>
+<p>rm readme.txt 删除文件</p>
+<p>git clong 链接 下载项目到本地</p>
+<p>git branch 列出本地分支<br>
+git branch VR_17_dgz 新建分支<br>
+git checkout -b VR_17_dgz 新建分支屏切换到当前分支<br>
+git checkout VR_17_dgz 跳转到此分支<br>
+git checkout - 切换到上一个分支</p>
+<p>将新分支发布在github上： git push origin Branch1<br>
+在本地删除一个分支： git branch -d Branch1<br>
+在github远程端删除一个分支： git push origin :Branch1   (分支名前的冒号代表删除)</p>
+<p>git merge name 将name合并到当前分支(自身被覆盖)<br>
+git merge --no-ff -m &quot;TiShi&quot; name 和上着的区别是会多产生一个提交<br>
+git log --graph 查看分支合并图</p>
+<p>git stash 隐藏工作现场/暂停<br>
+git stash list 查看被隐藏的列表<br>
+git stash pop 恢复隐藏</p>
+<p>git remote add origin git@github.com:q3689852/库名.git<br>
+git push -u origin master</p>
+<p>git checkout --文件夹或文件 恢复工作区</p>
+<p>大文件的解决方法<br>
+下载安装LFS<br>
+https://git-lfs.github.com/<br>
+git lfs install 初始化<br>
+git lfs track“* .psd” 大文件</p>
+<p>ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com&quot;电脑生成钥匙<br>
+cat ~/.ssh/id_rsa.pub 查看本地钥匙</p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://mainite.github.io/post/han-shu-mo-ban/">
+              <h3 class="post-title">
+                下一篇：函数模板
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+        
+          <div id="gitalk-container"></div>
+        
+
+        
+      
+
+      <div class="site-footer">
+  <div class="slogan">唯有爱与梦想不可辜负</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  2019 Copyright © 董国政 · UE4 · Dev  | <a class="rss" href="https://mainite.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'ba286055364f64368aa2',
+        clientSecret: 'd875d40f43256d71c8ec74f0f71ccba9f3a4efad',
+        repo: 'zgChihiro.github.io',
+        owner: 'zgChihiro',
+        admin: ['zgChihiro'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

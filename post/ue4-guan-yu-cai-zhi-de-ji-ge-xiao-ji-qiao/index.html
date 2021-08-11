@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>UE4关于材质的几个小技巧 | 董国政の一方净土</title>
+<meta name="description" content="唯有爱与梦想不可辜负">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://mainite.github.io/favicon.ico?v=1628647865974">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://mainite.github.io/styles/main.css">
+
+<link rel="apple-touch-icon" href="https://www.z4a.net/image/UDxDLK" />
+<link rel="apple-touch-icon" sizes="72x72" href="https://www.z4a.net/image/UDxawO" />
+<link rel="apple-touch-icon" sizes="114x114" href="https://www.z4a.net/image/UDx1mG" />
+
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115637133-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-115637133-2');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://mainite.github.io">
+        <img class="avatar" src="https://mainite.github.io/images/avatar.png?v=1628647865974" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://mainite.github.io">
+        <h1 class="site-title">董国政の一方净土</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="http://inite.cn" class="menu purple-link">
+            Home
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/archives" class="menu purple-link">
+            Blog
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/tags" class="menu purple-link">
+            Tag
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/post/zi-ji/" class="menu purple-link">
+            Self
+          </a>
+        
+      
+        
+          <a class="menu purple-link" href="https://blog.csdn.net/qq_36409711" class="menu" target="_blank">
+            CSDN
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">UE4关于材质的几个小技巧</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2018-06-10</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://mainite.github.io/tag/08pwvHhOZ/">
+                    UE4
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <p>相信很多程序出身的开发者对美术不是很了解<br>
+但是开发过程中又需要美术部分的一些技巧，<br>
+今天我就来安利一些UE4美术方面的技巧<br>
+希望能够帮助到大家</p>
+<h1 id="不用-ps-也可以制作法线">不用 PS 也可以制作法线</h1>
+<figure data-type="image" tabindex="1"><img src="https://www.z4a.net/images/2019/08/05/20180610202050449.png" alt="20180610202050449.png" loading="lazy"></figure>
+<h1 id="制作毛玻璃">制作毛玻璃</h1>
+<figure data-type="image" tabindex="2"><img src="https://www.z4a.net/images/2019/08/05/20180610121416345.jpg" alt="20180610121416345.jpg" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://www.z4a.net/images/2019/08/05/20180610121425813.jpg" alt="20180610121425813.jpg" loading="lazy"></figure>
+<h1 id="次表面材质">次表面材质</h1>
+<figure data-type="image" tabindex="4"><img src="https://www.z4a.net/images/2019/08/05/2018061020202793.png" alt="2018061020202793.png" loading="lazy"></figure>
+<figure data-type="image" tabindex="5"><img src="https://www.z4a.net/images/2019/08/05/20180610202020614.png" alt="20180610202020614.png" loading="lazy"></figure>
+<figure data-type="image" tabindex="6"><img src="https://www.z4a.net/images/2019/08/05/2018061020202793.png" alt="2018061020202793.png" loading="lazy"></figure>
+<h1 id="fresnel节点">Fresnel节点</h1>
+<figure data-type="image" tabindex="7"><img src="https://www.z4a.net/images/2019/08/05/2018061020214535.png" alt="2018061020214535.png" loading="lazy"></figure>
+<h1 id="乘以基础材质使其变旧-新手素材">乘以基础材质使其变旧  (新手素材)</h1>
+<figure data-type="image" tabindex="8"><img src="https://www.z4a.net/images/2019/08/05/20180610202537958.png" alt="20180610202537958.png" loading="lazy"></figure>
+<h1 id="customrotator自定义旋转">CustomRotator	自定义旋转</h1>
+<pre><code>![这里写图片描述](https://img-blog.csdn.net/20180610203925814?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2NDA5NzEx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+</code></pre>
+<h1 id="flattennormal法线平展">FlattenNormal	法线平展</h1>
+<h1 id="desatruation饱和度">Desatruation	饱和度</h1>
+<h1 id="边缘高亮">边缘高亮</h1>
+<p><img src="https://www.z4a.net/images/2019/08/05/20180701184920336.png" alt="20180701184920336.png" loading="lazy"><br>
+<img src="https://www.z4a.net/images/2019/08/05/20180701184929417.png" alt="20180701184929417.png" loading="lazy"></p>
+<h1 id="线框材质">线框材质</h1>
+<p><img src="https://www.z4a.net/images/2019/08/05/20180710150804229.png" alt="20180710150804229.png" loading="lazy"><br>
+<img src="https://www.z4a.net/images/2019/08/05/2018071015075751.png" alt="2018071015075751.png" loading="lazy"></p>
+<h1 id="缩放模型材质保持">缩放模型材质保持</h1>
+<p><img src="https://www.z4a.net/images/2019/08/05/20180727151112662.gif" alt="20180727151112662.gif" loading="lazy"><br>
+<img src="https://www.z4a.net/images/2019/08/05/20180727151122842.jpg" alt="20180727151122842.jpg" loading="lazy"></p>
+<h1 id="实时让画面居中">实时让画面居中</h1>
+<figure data-type="image" tabindex="9"><img src="https://www.z4a.net/images/2019/08/05/20180818120605734.png" alt="20180818120605734.png" loading="lazy"></figure>
+<h1 id="虚边效果">虚边效果</h1>
+<p><img src="https://www.z4a.net/images/2019/08/05/20181205172440685.png" alt="20181205172440685.png" loading="lazy"><br>
+持续更新中……</p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://mainite.github.io/post/ue4-du-xie-pei-zhi/">
+              <h3 class="post-title">
+                下一篇：UE4读写配置
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+        
+          <div id="gitalk-container"></div>
+        
+
+        
+      
+
+      <div class="site-footer">
+  <div class="slogan">唯有爱与梦想不可辜负</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  2019 Copyright © 董国政 · UE4 · Dev  | <a class="rss" href="https://mainite.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'ba286055364f64368aa2',
+        clientSecret: 'd875d40f43256d71c8ec74f0f71ccba9f3a4efad',
+        repo: 'zgChihiro.github.io',
+        owner: 'zgChihiro',
+        admin: ['zgChihiro'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

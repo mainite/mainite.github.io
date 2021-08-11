@@ -1,0 +1,246 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>UE4制作一团逼真的火焰 | 董国政の一方净土</title>
+<meta name="description" content="唯有爱与梦想不可辜负">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://mainite.github.io/favicon.ico?v=1628647865974">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://mainite.github.io/styles/main.css">
+
+<link rel="apple-touch-icon" href="https://www.z4a.net/image/UDxDLK" />
+<link rel="apple-touch-icon" sizes="72x72" href="https://www.z4a.net/image/UDxawO" />
+<link rel="apple-touch-icon" sizes="114x114" href="https://www.z4a.net/image/UDx1mG" />
+
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115637133-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-115637133-2');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://mainite.github.io">
+        <img class="avatar" src="https://mainite.github.io/images/avatar.png?v=1628647865974" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://mainite.github.io">
+        <h1 class="site-title">董国政の一方净土</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="http://inite.cn" class="menu purple-link">
+            Home
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/archives" class="menu purple-link">
+            Blog
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/tags" class="menu purple-link">
+            Tag
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/post/zi-ji/" class="menu purple-link">
+            Self
+          </a>
+        
+      
+        
+          <a class="menu purple-link" href="https://blog.csdn.net/qq_36409711" class="menu" target="_blank">
+            CSDN
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">UE4制作一团逼真的火焰</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2017-06-15</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://mainite.github.io/tag/08pwvHhOZ/">
+                    UE4
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <p>效果图：<a href="https://postimg.cc/CBC46yCh"><img src="https://i.postimg.cc/76dQhwf2/a-HR0c-Dov-L2lt-Zy5ib-G9n-Lm-Nz-ZG4ubm-V0-Lz-Iw-MTcw-Nj-E1-MTk0-Nz-E3-NTQ4.gif" alt="a-HR0c-Dov-L2lt-Zy5ib-G9n-Lm-Nz-ZG4ubm-V0-Lz-Iw-MTcw-Nj-E1-MTk0-Nz-E3-NTQ4.gif" loading="lazy"></a></p>
+<p>首先往内容浏览器中导入一张素材<br>
+<a href="https://postimg.cc/jWHNRHDv"><img src="https://i.postimg.cc/R08TQG4r/a-HR0c-Dov-L2lt-Zy5ib-G9n-Lm-Nz-ZG4ubm-V0-Lz-Iw-MTcw-Nj-E1-MTk0-ODQy-OTU3.png" alt="a-HR0c-Dov-L2lt-Zy5ib-G9n-Lm-Nz-ZG4ubm-V0-Lz-Iw-MTcw-Nj-E1-MTk0-ODQy-OTU3.png" loading="lazy"></a><br>
+我们用导入的火焰素材做一个材质球<br>
+<a href="https://postimg.cc/Z9tpk75C"><img src="https://i.postimg.cc/XvX8CtMc/a-HR0c-Dov-L2lt-Zy5ib-G9n-Lm-Nz-ZG4ubm-V0-Lz-Iw-MTcw-Nj-E1-MTk0-OTUy-Mzgw.png" alt="a-HR0c-Dov-L2lt-Zy5ib-G9n-Lm-Nz-ZG4ubm-V0-Lz-Iw-MTcw-Nj-E1-MTk0-OTUy-Mzgw.png" loading="lazy"></a><br>
+需要注意的是我们要把材质的混合模式改成半透明<br>
+<a href="https://postimg.cc/4HNpLYNP"><img src="https://i.postimg.cc/prKkdjww/a-HR0c-Dov-L2lt-Zy5ib-G9n-Lm-Nz-ZG4ubm-V0-Lz-Iw-MTcw-Nj-E1-MTk1-MTM2-Mj-Qy.png" alt="a-HR0c-Dov-L2lt-Zy5ib-G9n-Lm-Nz-ZG4ubm-V0-Lz-Iw-MTcw-Nj-E1-MTk1-MTM2-Mj-Qy.png" loading="lazy"></a><br>
+这样计算出来的材质球才会有透明的效果<br>
+<a href="https://postimg.cc/w7MhDRrT"><img src="https://i.postimg.cc/ncY0bvY7/a-HR0c-Dov-L2lt-Zy5ib-G9n-Lm-Nz-ZG4ubm-V0-Lz-Iw-MTcw-Nj-E1-MTk1-Mj-E1-NTk4.png" alt="a-HR0c-Dov-L2lt-Zy5ib-G9n-Lm-Nz-ZG4ubm-V0-Lz-Iw-MTcw-Nj-E1-MTk1-Mj-E1-NTk4.png" loading="lazy"></a><br>
+材质球做好之后我们新建一个粒子系统<br>
+<a href="https://postimg.cc/PN2WLQ2R"><img src="https://i.postimg.cc/WbPXH9rT/a-HR0c-Dov-L2lt-Zy5ib-G9n-Lm-Nz-ZG4ubm-V0-Lz-Iw-MTcw-Nj-E1-MTk1-NDM3-MTE0.png" alt="a-HR0c-Dov-L2lt-Zy5ib-G9n-Lm-Nz-ZG4ubm-V0-Lz-Iw-MTcw-Nj-E1-MTk1-NDM3-MTE0.png" loading="lazy"></a><br>
+并把 Required 更改成我们刚制作好的材质球<br>
+这时候左边会变成6X6的小火焰<br>
+然后右击发射器空白处找到subUV<br>
+添加一个Subimage Index<br>
+<a href="https://postimg.cc/fkw7Trjd"><img src="https://i.postimg.cc/44cWwCYW/a-HR0c-Dov-L2lt-Zy5ib-G9n-Lm-Nz-ZG4ubm-V0-Lz-Iw-MTcw-Nj-E1-Mj-Ax-NDI0-NTAx.png" alt="a-HR0c-Dov-L2lt-Zy5ib-G9n-Lm-Nz-ZG4ubm-V0-Lz-Iw-MTcw-Nj-E1-Mj-Ax-NDI0-NTAx.png" loading="lazy"></a><br>
+添加好之后<br>
+我们发射器点击Required<br>
+在细节里找到Sub UV<br>
+我们把Interpolation Method 改成随机Random<br>
+再把下面子图横向和纵向都改成6如图：<br>
+<a href="https://postimg.cc/ppSKCXNQ"><img src="https://i.postimg.cc/CxhJFzm2/a-HR0c-Dov-L2lt-Zy5ib-G9n-Lm-Nz-ZG4ubm-V0-Lz-Iw-MTcw-Nj-E1-Mj-Aw-Mz-I4-Mj-Yw.png" alt="a-HR0c-Dov-L2lt-Zy5ib-G9n-Lm-Nz-ZG4ubm-V0-Lz-Iw-MTcw-Nj-E1-Mj-Aw-Mz-I4-Mj-Yw.png" loading="lazy"></a><br>
+这时候火焰会变成一团<br>
+而不是开始时候的6X6<br>
+我们再次右击发射器空白处<br>
+在size栏里添加一个Size By Life<br>
+打开Size By Life的曲线编辑器进行修改<br>
+知道视口中的火焰变得更逼真<br>
+<a href="https://postimg.cc/TKWg4MGz"><img src="https://i.postimg.cc/3xt1WYqx/a-HR0c-Dov-L2lt-Zy5ib-G9n-Lm-Nz-ZG4ubm-V0-Lz-Iw-MTcw-Nj-E1-Mj-Ax-ODM0-Nz-M3.png" alt="a-HR0c-Dov-L2lt-Zy5ib-G9n-Lm-Nz-ZG4ubm-V0-Lz-Iw-MTcw-Nj-E1-Mj-Ax-ODM0-Nz-M3.png" loading="lazy"></a><br>
+当我们做完这些工作之后火焰就已经差不多了<br>
+但是真是的火焰不可能从一个点生成<br>
+所以我们要修改火焰的生成位置<br>
+然后我们再次右击发射器空白处<br>
+找到Location中的Sphere添加进来<br>
+单击Sphere在细节中把Constant的值改成10<br>
+然后保存退出<br>
+我们把修改好的粒子系统拖拽到场景中<br>
+就可以看到逼真的火焰效果了</p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://mainite.github.io/post/ue4-zhi-liu-guan-qia/">
+              <h3 class="post-title">
+                下一篇：UE4之流关卡
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+        
+          <div id="gitalk-container"></div>
+        
+
+        
+      
+
+      <div class="site-footer">
+  <div class="slogan">唯有爱与梦想不可辜负</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  2019 Copyright © 董国政 · UE4 · Dev  | <a class="rss" href="https://mainite.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'ba286055364f64368aa2',
+        clientSecret: 'd875d40f43256d71c8ec74f0f71ccba9f3a4efad',
+        repo: 'zgChihiro.github.io',
+        owner: 'zgChihiro',
+        admin: ['zgChihiro'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

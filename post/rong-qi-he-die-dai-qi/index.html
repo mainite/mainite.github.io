@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>容器和迭代器 | 董国政の一方净土</title>
+<meta name="description" content="唯有爱与梦想不可辜负">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://mainite.github.io/favicon.ico?v=1628647865974">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://mainite.github.io/styles/main.css">
+
+<link rel="apple-touch-icon" href="https://www.z4a.net/image/UDxDLK" />
+<link rel="apple-touch-icon" sizes="72x72" href="https://www.z4a.net/image/UDxawO" />
+<link rel="apple-touch-icon" sizes="114x114" href="https://www.z4a.net/image/UDx1mG" />
+
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115637133-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-115637133-2');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://mainite.github.io">
+        <img class="avatar" src="https://mainite.github.io/images/avatar.png?v=1628647865974" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://mainite.github.io">
+        <h1 class="site-title">董国政の一方净土</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="http://inite.cn" class="menu purple-link">
+            Home
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/archives" class="menu purple-link">
+            Blog
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/tags" class="menu purple-link">
+            Tag
+          </a>
+        
+      
+        
+          <a href="https://zgChihiro.github.io/post/zi-ji/" class="menu purple-link">
+            Self
+          </a>
+        
+      
+        
+          <a class="menu purple-link" href="https://blog.csdn.net/qq_36409711" class="menu" target="_blank">
+            CSDN
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">容器和迭代器</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2017-03-23</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://mainite.github.io/tag/XsHBgzEiW/">
+                    C++
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <p>容器的概念很好理解 <br>
+所谓迭代器就是一种检查容器内元素并遍历元素的数据类型<br>
+初学写的一个小案例：</p>
+<pre><code>#include &quot;stdafx.h&quot;
+#include
+#include
+#include&quot;vector&quot;   //使用容器必须加上此头文件
+
+using namespace std;
+
+void main11()
+{
+vector v1;         //v1是一个容器
+//往容器里存入数据
+v1.push_back(1);
+v1.push_back(3);
+v1.push_back(5);
+v1.push_back(7);
+v1.push_back(9);
+
+cout &lt;&lt; &quot;容器v1的长度：&quot; &lt;&lt; v1.size() &lt;&lt; endl;    //输出容器的长度
+cout &lt;&lt;&quot;容器的第三个元素：&quot;&lt;&lt; v1[3] &lt;&lt; endl; //输出容器的第三个元素
+//vector ::iterator iter; //定义一个自己类型的迭代器  iter是名字
+//定义一个名为iter的变量，它的数据类型是由vector定义的iterator类型。
+
+for (vector ::iterator iter = v1.begin(); iter != v1.end(); iter++)
+{
+	cout &lt;&lt; *iter &lt;&lt; &quot;  &quot;; //遍历输出
+}
+	cout &lt;&lt; endl;
+}
+
+int main()
+{
+main11();
+    return 0;
+}
+</code></pre>
+<!-- more -->
+<p>案例二 <br>
+这是一个存放指针的容器案例</p>
+<pre><code>#include &quot;stdafx.h&quot;
+#include
+#include
+#include&quot;vector&quot;   //使用容器必须加上此头文件
+
+using namespace std;
+
+class Teacher
+{
+	public:
+	int age;
+	char name[64];
+	public:
+	void printT()
+	{
+		cout &lt;&lt; &quot;年龄是：&quot; &lt;&lt; age &lt;&lt; endl;
+	}
+};
+</code></pre>
+<pre><code>void main12()
+{
+Teacher t1, t2, t3;
+Teacher *p1, *p2, *p3;
+t1.age = 31;
+t2.age = 32;
+t3.age = 33;
+p1 = &amp;t1;
+p2 = &amp;t2;
+p3 = &amp;t3;
+vector v1;
+
+v1.push_back(p1);
+v1.push_back(p2);
+v1.push_back(p3);
+for (vector ::iterator iter = v1.begin(); iter != v1.end(); iter++)
+	{
+		cout &lt;&lt; (*iter)-&gt;age &lt;&lt; &quot;  &quot;;
+	}
+
+cout &lt;&lt; endl;
+}
+	int main()
+{
+	//main11();
+	main12();
+    return 0;
+}
+</code></pre>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://mainite.github.io/post/git-xue-xi-bi-ji/">
+              <h3 class="post-title">
+                下一篇：git学习笔记
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+        
+          <div id="gitalk-container"></div>
+        
+
+        
+      
+
+      <div class="site-footer">
+  <div class="slogan">唯有爱与梦想不可辜负</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  2019 Copyright © 董国政 · UE4 · Dev  | <a class="rss" href="https://mainite.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'ba286055364f64368aa2',
+        clientSecret: 'd875d40f43256d71c8ec74f0f71ccba9f3a4efad',
+        repo: 'zgChihiro.github.io',
+        owner: 'zgChihiro',
+        admin: ['zgChihiro'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
